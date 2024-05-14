@@ -16,7 +16,11 @@ const server = http.createServer(app);
 const wsServer = new Server(server);
 
 wsServer.on("connection", (socket) => {
-  console.log(socket);
+  socket.onAny((event) => console.log(`Socket Event: ${event}`));
+  socket.on("enter_room", (roomName, showRoom) => {
+    socket.join(roomName);
+    showRoom();
+  });
 });
 
 // const sockets = [];
