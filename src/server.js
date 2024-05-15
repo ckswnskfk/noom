@@ -22,6 +22,13 @@ wsServer.on("connection", (socket) => {
     showRoom();
     socket.to(roomName).emit("welcome");
   });
+  socket.on("disconnecting", () => {
+    socket.rooms.forEach((room) => socket.to(room).emit("bye"));
+  });
+  socket.on("new_message", (msg, roomName, cb) => {
+    socket.to(roomName).emit("new_message", msg);
+    cb();
+  });
 });
 
 // const sockets = [];
