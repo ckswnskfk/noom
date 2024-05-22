@@ -27,3 +27,10 @@ instrument(wsServer, {
   auth: false,
   mode: "development",
 });
+
+wsServer.on("connection", (socket) => {
+  socket.on("join_room", (roomName, done) => {
+    socket.join(roomName);
+    done();
+  });
+});
